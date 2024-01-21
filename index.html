@@ -10,12 +10,6 @@
       padding: 0;
       background-color: black;
       color: lime;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    
-    body.light-mode {
-      background-color: white;
-      color: green;
     }
     
     .navbar {
@@ -158,40 +152,6 @@
     .show {
       display: block;
     }
-    
-    /* Toggle Button Styles */
-    .toggle-btn {
-      position: relative;
-      width: 50px;
-      height: 25px;
-      background-color: #000033;
-      border-radius: 15px;
-      cursor: pointer;
-    }
-    
-    .toggle-btn .sun-icon {
-      position: absolute;
-      top: 50%;
-      left: 3px;
-      transform: translateY(-50%);
-      color: lime;
-    }
-    
-    .toggle-btn .circle {
-      position: absolute;
-      top: 3px;
-      left: 25px;
-      width: 19px;
-      height: 19px;
-      border-radius: 50%;
-      background-color: lime;
-      transition: all 0.3s;
-    }
-    
-    .toggle-btn.light-mode .circle {
-      transform: translateX(25px);
-      background-color: #000033;
-    }
   </style>
 </head>
 <body>
@@ -209,60 +169,61 @@
         <a href="https://www.roblox.com/games/16018553783/">Commissions</a>
       </div>
     </div>
-    <div class="toggle-btn" onclick="toggleMode()">
-      <i class="fas fa-sun sun-icon"></i>
-      <div class="circle"></div>
-    </div>
   </div>
   <div class="container">
     <div class="content" id="home">
       <h1 style="font-size: 40px;">Welcome to my Portfolio</h1>
       <p style="font-size: 20px;">Hi, This is my portfolio website which will showcase my past work and may also contain some work-in-progress projects.</p>
       <h2 style="font-size: 30px;">About Me</h2>
-      <p style="font-size: 20px;">Hi, I'm Zeyan and I'm 14 years old. I do commissions for Roblox! I have coding skills and I'm familiar with various programming languages like HTML, CSS, JavaScript, etc.</p>
+      <p style="font-size: 20px;">Hi, I'm Zeyan and I'm 14 years old. I do commissions for Roblox! I have coding skills and I'm familiar with OOP. Though I'm not an expert yet, I'm constantly improving and giving my best. 👍</p>
       <h2 style="font-size: 30px;">Portfolio</h2>
       <div class="portfolio-item">
-        <img src="project1.png" alt="Project 1">
+        <img src="image1.jpg" alt="Portfolio Item 1">
         <div class="item-details">
-          <h3>Project 1</h3>
-          <p>Description of project 1.</p>
+          <h3 style="font-size: 24px;">Portfolio Item 1</h3>
+          <p style="font-size: 18px;">A description of the first portfolio item goes here.</p>
         </div>
       </div>
       <div class="portfolio-item">
-        <img src="project2.png" alt="Project 2">
+        <img src="image2.jpg" alt="Portfolio Item 2">
         <div class="item-details">
-          <h3>Project 2</h3>
-          <p>Description of project 2.</p>
+          <h3 style="font-size: 24px;">Portfolio Item 2</h3>
+          <p style="font-size: 18px;">A description of the second portfolio item goes here.</p>
         </div>
       </div>
-      <h2 style="font-size: 30px;">Contact</h2>
-      <p style="font-size: 20px;">Feel free to contact me via email or through the contact form below:</p>
-      <form>
-        <input type="text" placeholder="Name">
-        <input type="email" placeholder="Email">
-        <textarea placeholder="Message"></textarea>
-        <button type="submit">Send</button>
-      </form>
+    </div>
+    <div class="content" id="contact">
+      <h2 style="font-size: 30px;">Contact Me</h2>
+  
+      <ul>
+        <li><a href="https://discord.gg/eNHRKZcwUa" class="button" title="Join Discord" style="font-size: 18px;"><i class="fab fa-discord"></i> Discord</a></li>
+        <li><a href="https://www.roblox.com/users/3522931236/profile" class="button" title="Visit Roblox Profile" style="font-size: 18px;"><i class="fab fa-roblox"></i> Roblox</a></li>
+        <li><a href="https://twitter.com/zeyan99645177" class="button" title="Follow on Twitter" style="font-size: 18px;"><i class="fab fa-twitter"></i> Twitter</a></li>
+      </ul>
     </div>
   </div>
-  
+
   <script>
-    function toggleMode() {
-      const body = document.querySelector('body');
-      body.classList.toggle('light-mode');
-    }
-    
-    function toggleDropdown() {
-      const dropdown = document.getElementById('dropdown');
-      dropdown.classList.toggle('show');
-    }
-    
-    function scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
+    function scrollToSection(id) {
+      const section = document.getElementById(id);
       section.scrollIntoView({ behavior: 'smooth' });
     }
     
-       function playClickSound() {
+    function toggleDropdown() {
+      var dropdown = document.getElementById("dropdown");
+      dropdown.classList.toggle("show");
+    }
+  
+    window.onclick = function(event) {
+      if (!event.target.matches('.button')) {
+        var dropdown = document.getElementById("dropdown");
+        if (dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      }
+    }
+
+    function playClickSound() {
       var audio = new Audio('clicksound.mp3');
       audio.play();
     }
