@@ -178,17 +178,17 @@
       <p style="font-size: 20px;">Hi, I'm Zeyan and I'm 14 years old. I do commissions for Roblox! I have coding skills and I'm familiar with OOP. Though I'm not an expert yet, I'm constantly improving and giving my best. 👍</p>
       <h2 style="font-size: 30px;">Portfolio</h2>
       <div class="portfolio-item">
-        <img src="image1.jpg" alt="Portfolio Item 1">
+        <img src="image1.png" alt="Portfolio Item 1">
         <div class="item-details">
-          <h3 style="font-size: 24px;">Portfolio Item 1</h3>
-          <p style="font-size: 18px;">A description of the first portfolio item goes here.</p>
+          <h3 style="font-size: 24px;"> OOP example 1</h3>
+          <p style="font-size: 18px;"> Some of my code that contains OOP.</p>
         </div>
       </div>
       <div class="portfolio-item">
-        <img src="image2.jpg" alt="Portfolio Item 2">
+        <img src="image2.png" alt="Portfolio Item 2">
         <div class="item-details">
-          <h3 style="font-size: 24px;">Portfolio Item 2</h3>
-          <p style="font-size: 18px;">A description of the second portfolio item goes here.</p>
+          <h3 style="font-size: 24px;">Player outfit loader</h3>
+          <p style="font-size: 18px;">A Script that loads all player outfits.</p>
         </div>
       </div>
     </div>
