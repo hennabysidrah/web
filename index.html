@@ -196,6 +196,61 @@
       transform: scale(1.1);
       cursor: pointer;
     }
+    
+    /* Popup Styles */
+    .popup-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    
+    .popup-content {
+      background-color: lime;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    
+    .popup-title {
+      font-size: 24px;
+      color: black;
+      margin-bottom: 10px;
+    }
+    
+    .popup-description {
+      font-size: 18px;
+      color: black;
+      margin-bottom: 20px;
+    }
+    
+    .popup-buttons {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .popup-button {
+      padding: 10px 20px;
+      background-color: #000033;
+      color: lime;
+      text-decoration: none;
+      border-radius: 3px;
+      margin: 0 10px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .popup-button:hover {
+      color: yellow;
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 <body>
@@ -247,9 +302,22 @@
     </div>
   </div>
 
+  <!-- Modal for image zooming -->
   <div id="modal" class="modal" onclick="hideImage()">
     <span class="close" onclick="hideImage()">&times;</span>
     <img class="modal-content" id="modal-image">
+  </div>
+  
+  <!-- Popup for Discord -->
+  <div id="popup" class="popup-container">
+    <div class="popup-content">
+      <h2 class="popup-title">Join Our Discord!</h2>
+      <p class="popup-description">For a better way of contacting me, join our Discord community.</p>
+      <div class="popup-buttons">
+        <a href="https://discord.gg/eNHRKZcwUa" class="popup-button">Join Discord</a>
+        <button class="popup-button" onclick="hidePopup()">Later</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -287,6 +355,17 @@
     function hideImage() {
       var modal = document.getElementById("modal");
       modal.style.display = "none";
+    }
+    
+    function hidePopup() {
+      var popup = document.getElementById("popup");
+      popup.style.display = "none";
+    }
+    
+    // Show the popup when the page loads
+    window.onload = function() {
+      var popup = document.getElementById("popup");
+      popup.style.display = "flex";
     }
   </script>
 </body>
