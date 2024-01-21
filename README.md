@@ -1,8 +1,9 @@
+
 <html>
 <head>
   <title>Portfolio Website</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  
+
   <style>
     body {
       font-family: 'Courier New', Courier, monospace;
@@ -11,15 +12,15 @@
       background-color: black;
       color: lime;
     }
-    
+
     .navbar {
       background-color: #000033;
       padding: 10px;
       display: flex;
       justify-content: space-between;
-      align-items: center; 
+      align-items: center;
     }
-    
+
     .navbar ul {
       list-style-type: none;
       margin: 0;
@@ -27,40 +28,40 @@
       display: flex;
       align-items: center;
     }
-    
+
     .navbar li {
       margin-right: 10px;
     }
-    
+
     .navbar li:last-child {
       margin-right: 0;
     }
-    
+
     .navbar a {
-      display: flex;  
-      align-items: center;  
+      display: flex;
+      align-items: center;
       padding: 10px;
       color: lime;
       text-decoration: none;
       cursor: pointer;
       transition: transform 0.3s;
     }
-    
+
     .navbar a i {
-      margin-right: 5px; 
+      margin-right: 5px;
     }
-    
+
     .navbar a:hover {
       color: yellow;
       transform: translateY(-2px);
     }
-    
+
     .container {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
     }
-    
+
     .content {
       background-color: #000066;
       padding: 20px;
@@ -68,7 +69,7 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       text-align: left;
     }
-    
+
     .button {
       display: inline-block;
       padding: 12px 20px;
@@ -82,12 +83,12 @@
       position: relative;
       cursor: pointer;
     }
-    
+
     .button:hover {
       color: yellow;
       transform: translateY(-2px);
     }
-    
+
     .portfolio-item {
       display: flex;
       margin-bottom: 20px;
@@ -95,34 +96,35 @@
       border-radius: 3px;
       padding: 10px;
     }
-    
+
     .portfolio-item img {
       width: 200px;
       height: 150px;
       margin-right: 10px;
       border: 1px solid lime;
       border-radius: 3px;
+      cursor: pointer;
     }
-    
+
     .portfolio-item .item-details {
       flex-grow: 1;
     }
-    
+
     .portfolio-item h3 {
       margin-top: 0;
       color: lime;
     }
-    
+
     .portfolio-item p {
       margin-top: 5px;
     }
-    
+
     /* Dropdown Styles */
     .dropdown {
       position: relative;
       display: inline-block;
     }
-    
+
     .dropdown-content {
       display: none;
       position: absolute;
@@ -152,6 +154,48 @@
     .show {
       display: block;
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 100px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+    }
+
+    .close {
+      color: #fff;
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 35px;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+
+    .close:hover {
+      color: #aaa;
+      transform: scale(1.1);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -178,14 +222,14 @@
       <p style="font-size: 20px;">Hi, I'm Zeyan and I'm 14 years old. I do commissions for Roblox! I have coding skills and I'm familiar with OOP. Though I'm not an expert yet, I'm constantly improving and giving my best. 👍</p>
       <h2 style="font-size: 30px;">Portfolio</h2>
       <div class="portfolio-item">
-        <img src="image1.png" alt="Portfolio Item 1">
+        <img src="image1.png" alt="Portfolio Item 1" onclick="showImage('image1.png')">
         <div class="item-details">
           <h3 style="font-size: 24px;"> OOP example 1</h3>
           <p style="font-size: 18px;"> Some of my code that contains OOP.</p>
         </div>
       </div>
       <div class="portfolio-item">
-        <img src="image2.png" alt="Portfolio Item 2">
+        <img src="image2.png" alt="Portfolio Item 2" onclick="showImage('image2.png')">
         <div class="item-details">
           <h3 style="font-size: 24px;">Player outfit loader</h3>
           <p style="font-size: 18px;">A Script that loads all player outfits.</p>
@@ -194,7 +238,7 @@
     </div>
     <div class="content" id="contact">
       <h2 style="font-size: 30px;">Contact Me</h2>
-  
+
       <ul>
         <li><a href="https://discord.gg/eNHRKZcwUa" class="button" title="Join Discord" style="font-size: 18px;"><i class="fab fa-discord"></i> Discord</a></li>
         <li><a href="https://www.roblox.com/users/3522931236/profile" class="button" title="Visit Roblox Profile" style="font-size: 18px;"><i class="fab fa-roblox"></i> Roblox</a></li>
@@ -203,17 +247,22 @@
     </div>
   </div>
 
+  <div id="modal" class="modal" onclick="hideImage()">
+    <span class="close" onclick="hideImage()">&times;</span>
+    <img class="modal-content" id="modal-image">
+  </div>
+
   <script>
     function scrollToSection(id) {
       const section = document.getElementById(id);
       section.scrollIntoView({ behavior: 'smooth' });
     }
-    
+
     function toggleDropdown() {
       var dropdown = document.getElementById("dropdown");
       dropdown.classList.toggle("show");
     }
-  
+
     window.onclick = function(event) {
       if (!event.target.matches('.button')) {
         var dropdown = document.getElementById("dropdown");
@@ -226,6 +275,18 @@
     function playClickSound() {
       var audio = new Audio('clicksound.mp3');
       audio.play();
+    }
+
+    function showImage(src) {
+      var modal = document.getElementById("modal");
+      var modalImage = document.getElementById("modal-image");
+      modal.style.display = "block";
+      modalImage.src = src;
+    }
+
+    function hideImage() {
+      var modal = document.getElementById("modal");
+      modal.style.display = "none";
     }
   </script>
 </body>
