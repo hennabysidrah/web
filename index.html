@@ -1,372 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-  <title>Portfolio Website</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commission</title>
+    <!-- Include Tailwind CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: 'Courier New', Courier, monospace;
-      margin: 0;
-      padding: 0;
-      background-color: black;
-      color: lime;
-    }
+<style>
+nav {
+    position: relative;
+    z-index: 9999;
+}
 
-    .navbar {
-      background-color: #000033;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+body > * {
+    position: relative;
+    z-index: 1;
+}
+</style>
 
-    .navbar ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    .navbar li {
-      margin-right: 10px;
-    }
-
-    .navbar li:last-child {
-      margin-right: 0;
-    }
-
-    .navbar a {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      color: lime;
-      text-decoration: none;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .navbar a i {
-      margin-right: 5px;
-    }
-
-    .navbar a:hover {
-      color: yellow;
-      transform: translateY(-2px);
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .content {
-      background-color: #000066;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      text-align: left;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 12px 20px;
-      background-color: #000033;
-      color: lime;
-      text-decoration: none;
-      border-radius: 3px;
-      margin-right: 20px;
-      border: none;
-      transition: transform 0.3s;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .button:hover {
-      color: yellow;
-      transform: translateY(-2px);
-    }
-
-    .portfolio-item {
-      display: flex;
-      margin-bottom: 20px;
-      border: 1px solid lime;
-      border-radius: 3px;
-      padding: 10px;
-    }
-
-    .portfolio-item img {
-      width: 200px;
-      height: 150px;
-      margin-right: 10px;
-      border: 1px solid lime;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-
-    .portfolio-item .item-details {
-      flex-grow: 1;
-    }
-
-    .portfolio-item h3 {
-      margin-top: 0;
-      color: lime;
-    }
-
-    .portfolio-item p {
-      margin-top: 5px;
-    }
-
-    /* Dropdown Styles */
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #000033;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-      top: 30px;
-      right: 0;
-    }
-
-    .dropdown-content a {
-      color: lime;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #000066;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    .show {
-      display: block;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      padding-top: 100px;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.9);
-    }
-
-    .modal-content {
-      margin: auto;
-      display: block;
-      width: 80%;
-      max-width: 700px;
-    }
-
-    .modal-content img {
-      width: 100%;
-      height: auto;
-    }
-
-    .close {
-      color: #fff;
-      position: absolute;
-      top: 10px;
-      right: 25px;
-      font-size: 35px;
-      font-weight: bold;
-      transition: transform 0.3s;
-    }
-
-    .close:hover {
-      color: #aaa;
-      transform: scale(1.1);
-      cursor: pointer;
-    }
-    
-    /* Popup Styles */
-    .popup-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.5);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-    
-    .popup-content {
-      background-color: lime;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-      text-align: center;
-    }
-    
-    .popup-title {
-      font-size: 24px;
-      color: black;
-      margin-bottom: 10px;
-    }
-    
-    .popup-description {
-      font-size: 18px;
-      color: black;
-      margin-bottom: 20px;
-    }
-    
-    .popup-buttons {
-      display: flex;
-      justify-content: center;
-    }
-    
-    .popup-button {
-      padding: 10px 20px;
-      background-color: #000033;
-      color: lime;
-      text-decoration: none;
-      border-radius: 3px;
-      margin: 0 10px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-    
-    .popup-button:hover {
-      color: yellow;
-      transform: translateY(-2px);
-    }
-  </style>
 </head>
-<body>
-  <div class="navbar">
-    <ul>
-      <li><a onclick="scrollToSection('home')" title="Go to Home"><i class="fas fa-home"></i> Home</a></li>
-      <li><a onclick="scrollToSection('about')" title="About Me"><i class="fas fa-info-circle"></i> About</a></li>
-      <li><a onclick="scrollToSection('portfolio')" title="Portfolio"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-      <li><a onclick="scrollToSection('contact')" title="Contact Me"><i class="fas fa-envelope"></i> Contact</a></li>
-    </ul>
-    <div class="dropdown">
-      <a href="#" class="button" onclick="playClickSound(); toggleDropdown()" title="Projects"><i class="fa fa-hammer"></i></a>
-      <div id="dropdown" class="dropdown-content">
-        <a href="https://www.roblox.com/games/13304409142/Memes-Tower-Defense">Memes Tower Defense</a>
-        <a href="https://www.roblox.com/games/16018553783/">Commissions</a>
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="content" id="home">
-      <h1 style="font-size: 40px;">Welcome to my Portfolio</h1>
-      <p style="font-size: 20px;">Hi, This is my portfolio website which will showcase my past work and may also contain some work-in-progress projects.</p>
-      <h2 style="font-size: 30px;">About Me</h2>
-      <p style="font-size: 20px;">Hi, I'm Zeyan and I'm 14 years old. I do commissions for Roblox! I have coding skills and I'm familiar with OOP. Though I'm not an expert yet, I'm constantly improving and giving my best. 👍</p>
-      <h2 style="font-size: 30px;">Portfolio</h2>
-      <div class="portfolio-item">
-        <img src="image2.png" alt="Portfolio Item 1" onclick="showImage('image2.png')">
-        <div class="item-details">
-          <h3 style="font-size: 24px;"> OOP example 1</h3>
-          <p style="font-size: 18px;"> Some of my code that contains OOP.</p>
+
+<body class="bg-gray-100">
+
+    <div x-data="{ open: true }">
+        <!-- Modal -->
+        <div x-show="open" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+            aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+                <!-- Modal content -->
+                <div
+                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            Join Our Discord!
+                        </h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                                For a better way of contacting me, join our Discord community.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <a href="https://discord.gg/eNHRKZcwUa" target="_blank">
+                            <button type="button"
+                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                @click="open = false">
+                                Join Discord
+                            </button></a>
+                        <button type="button"
+                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+                            @click="open = false">
+                            Later
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="portfolio-item">
-        <img src="image1.png" alt="Portfolio Item 2" onclick="showImage('image1.png')">
-        <div class="item-details">
-          <h3 style="font-size: 24px;">Player outfit loader</h3>
-          <p style="font-size: 18px;">A Script that loads all player outfits.</p>
+    </div>
+
+    <!-- Include Alpine.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+    <div class="bg-gray-800 p-2 mt-0 fixed w-full">
+        <div class="container mx-auto flex flex-wrap items-center">
+            <div class="flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold">
+                <a class="text-white no-underline hover:text-white hover:no-underline" href="index.html">
+                    <span class="text-2xl pl-2"><i class="em em-grinning"></i> Sacred Studios</span>
+                </a>
+            </div>
+            <div class="flex w-full pt-2 content-center justify-between md:w-1/2 md:justify-end">
+                <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
+                    <li class="mr-3">
+                        <a class="inline-block py-2 px-4 text-white no-underline" href="index.html">Home</a>
+                    </li>
+                    <li class="mr-3">
+                        <a class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+                            href="#about">About</a>
+                    </li>
+                    <li class="mr-3">
+                        <a class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+                            href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="content" id="contact">
-      <h2 style="font-size: 30px;">Contact Me</h2>
 
-      <ul>
-        <li><a href="https://discord.gg/eNHRKZcwUa" class="button" title="Join Discord" style="font-size: 18px;"><i class="fab fa-discord"></i> Discord</a></li>
-        <li><a href="https://www.roblox.com/users/3522931236/profile" class="button" title="Visit Roblox Profile" style="font-size: 18px;"><i class="fab fa-roblox"></i> Roblox</a></li>
-        <li><a href="https://twitter.com/zeyan99645177" class="button" title="Follow on Twitter" style="font-size: 18px;"><i class="fab fa-twitter"></i> Twitter</a></li>
-      </ul>
+    <div
+        class="min-h-screen bg-gradient-to-r from-blue-500 to-purple-500 flex flex-col items-center justify-center pt-20">
+        <div class="w-3/4 bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8 mb-4">
+            <h1 class="text-5xl font-bold text-center text-blue-700">Welcome to my Portfolio</h1>
+            <p class="mt-5 text-lg text-gray-700">Hi, This is my portfolio website which will showcase my past work and
+                may also contain some work-in-progress projects.</p>
+        </div>
+
+        <div id="about" class="w-3/4 bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-4xl font-bold text-blue-600">About Me</h2>
+            <p class="mt-4 text-lg text-gray-700">Hi, I'm Zeyan and I'm 14 years old. I do commissions for Roblox! I
+                have coding skills and I'm familiar with OOP. Though I'm not an expert yet, I'm constantly improving and
+                giving my best. 👍</p>
+        </div>
+
+        <div class="w-3/4 bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-4xl font-bold text-blue-600">Portfolio</h2>
+            <div class="mt-4">
+                <h3 class="text-2xl font-bold text-blue-500">Portfolio Item 1</h3>
+                <h4 class="text-xl mt-2 text-blue-400">OOP example 1</h4>
+                <p class="text-lg text-gray-700">Some of my code that contains OOP.</p>
+                <img src="image2.webp" alt="Portfolio Item 1" class="mt-2">
+            </div>
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold text-blue-500">Portfolio Item 2</h3>
+                <h4 class="text-xl mt-2 text-blue-400">Player outfit loader</h4>
+                <p class="text-lg text-gray-700">A Script that loads all player outfits.</p>
+                <img src="image1.webp" alt="Portfolio Item 2" class="mt-2">
+            </div>
+        </div>
+
+        <div id="contact" class="w-3/4 bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-4xl font-bold text-blue-600">Contact Me</h2>
+            <ul class="list-disc list-inside mt-4 text-lg text-gray-700">
+                <li class="flex items-center mb-2">
+                    <img src="discord (1).png" alt="Discord" class="w-6 h-6 mr-2">
+                    <a href="https://discord.gg/eNHRKZcwUa" class="text-blue-500 hover:underline">Discord</a>
+                </li>
+                <li class="flex items-center mb-2">
+                    <img src="image2.png" alt="Roblox" class="w-6 h-6 mr-2">
+                    <a href="https://www.roblox.com/users/3522931236/profile"
+                        class="text-blue-500 hover:underline">Roblox</a>
+                </li>
+                <li class="flex items-center mb-2">
+                    <img src="twitter.png" alt="Twitter" class="w-6 h-6 mr-2">
+                    <a href="https://twitter.com/zeyan99645177" class="text-blue-500 hover:underline">Twitter</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="w-3/4 bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-4xl font-bold text-blue-600"> A Working System Programed By me. </h2>
+            <div class="mt-4 top-0">
+                <video class="w-full h-auto rounded" controls>
+                    <source src="Video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Modal for image zooming -->
-  <div id="modal" class="modal" onclick="hideImage()">
-    <span class="close" onclick="hideImage()">&times;</span>
-    <img class="modal-content" id="modal-image">
-  </div>
-  
-  <!-- Popup for Discord -->
-  <div id="popup" class="popup-container">
-    <div class="popup-content">
-      <h2 class="popup-title">Join Our Discord!</h2>
-      <p class="popup-description">For a better way of contacting me, join our Discord community.</p>
-      <div class="popup-buttons">
-        <a href="https://discord.gg/eNHRKZcwUa" class="popup-button">Join Discord</a>
-        <button class="popup-button" onclick="hidePopup()">Later</button>
-      </div>
+
+
+    <div class="bg-gray-800 text-white text-center p-4 mt-8">
+        <h2 class="text-2xl font-bold">Credits</h2>
+        <p class="text-lg">Website designed and developed by <a href="https://moenyofficial.github.io/Public/"
+                target="_blank" class="text-blue-500 hover:text-blue-700">MoenyOfficial</a></p>
     </div>
-  </div>
 
-  <script>
-    function scrollToSection(id) {
-      const section = document.getElementById(id);
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function toggleDropdown() {
-      var dropdown = document.getElementById("dropdown");
-      dropdown.classList.toggle("show");
-    }
-
-    window.onclick = function(event) {
-      if (!event.target.matches('.button')) {
-        var dropdown = document.getElementById("dropdown");
-        if (dropdown.classList.contains('show')) {
-          dropdown.classList.remove('show');
-        }
-      }
-    }
-
-    function playClickSound() {
-      var audio = new Audio('clicksound.mp3');
-      audio.play();
-    }
-
-    function showImage(src) {
-      var modal = document.getElementById("modal");
-      var modalImage = document.getElementById("modal-image");
-      modal.style.display = "block";
-      modalImage.src = src;
-    }
-
-    function hideImage() {
-      var modal = document.getElementById("modal");
-      modal.style.display = "none";
-    }
-    
-    function hidePopup() {
-      var popup = document.getElementById("popup");
-      popup.style.display = "none";
-    }
-    
-    // Show the popup when the page loads
-    window.onload = function() {
-      var popup = document.getElementById("popup");
-      popup.style.display = "flex";
-    }
-  </script>
+    <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+        &copy; 2024 - Sacred Studios.
+    </footer>
 </body>
+
 </html>
