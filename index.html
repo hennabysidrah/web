@@ -5,23 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commission</title>
-    <!-- Include Tailwind CSS via CDN -->
-   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #slider-container {
+            width: 600px;
+            height: 400px;
+        }
 
-<style>
-nav {
-    position: fixed;
-    z-index: 9999;
-}
+        #slider-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-body > * {
-    z-index: 2;
-}
-</style>
+        nav {
+            position: fixed;
+            z-index: 9999;
+        }
 
+        body>* {
+            z-index: 2;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gradient-to-r from-blue-500 to-purple-500">
 
     <div x-data="{ open: true }">
         <!-- Modal -->
@@ -103,7 +111,6 @@ body > * {
                 have coding skills and I'm familiar with OOP. Though I'm not an expert yet, I'm constantly improving and
                 giving my best. 👍</p>
         </div>
-
         <div class="w-3/4 bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8 mb-4">
             <h2 class="text-4xl font-bold text-blue-600">Portfolio</h2>
             <div class="mt-4">
@@ -150,18 +157,83 @@ body > * {
         </div>
     </div>
 
+    <div class="relative justify-center flex items-center bg-gradient-to-r from-blue-500 to-purple-500">
+        <button id="prev" class="bg-white p-2 rounded-full shadow-md absolute left-0 ml-4 z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <div id="slider-container" class="relative overflow-hidden mx-12 border-4 border-black rounded-lg">
+            <div class="w-full h-full flex transition-transform duration-500 ease-in-out" id="slider">
+                <img src="Empty.png" class="rounded-lg">
+                <img src="Empty1.png" class="rounded-lg">
+                <img src="Empty2.png" class="rounded-lg">
+            </div>
+        </div>
+        <button id="next" class="bg-white p-2 rounded-full shadow-md absolute right-0 mr-4 z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
 
-
+    <!-- Footer -->
     <div class="bg-gray-800 text-white text-center p-4 mt-8">
         <h2 class="text-2xl font-bold">Credits</h2>
         <p class="text-lg">Website designed and developed by <a href="https://moenyofficial.github.io/Public/"
                 target="_blank" class="text-blue-500 hover:text-blue-700">MoenyOfficial</a></p>
+
+
+        <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+            &copy; 2024 - Sacred Studios.
+        </footer>
     </div>
 
-    <footer class="bg-gray-800 text-white text-center p-4 mt-8">
-        &copy; 2024 - Sacred Studios.
-    </footer>
+    <script>
+        // JavaScript remains unchanged
+        const slider = document.getElementById('slider');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        let currentIndex = 0;
+        let autoSlideInterval;
+        const autoSlideDuration = 3000; // Auto slide every 3 seconds
+        const manualSlidePause = 10000; // Pause auto slide for 10 seconds after manual navigation
 
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        function autoSlide() {
+            currentIndex = (currentIndex < slider.children.length - 1) ? currentIndex + 1 : 0;
+            updateSlider();
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(autoSlide, autoSlideDuration);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            setTimeout(startAutoSlide, manualSlidePause);
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : slider.children.length - 1;
+            updateSlider();
+            resetAutoSlide();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex < slider.children.length - 1) ? currentIndex + 1 : 0;
+            updateSlider();
+            resetAutoSlide();
+        });
+
+        // Start the auto-slide on page load
+        startAutoSlide();
+    </script>
 </body>
 
 </html>
