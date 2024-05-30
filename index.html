@@ -12,10 +12,32 @@
             height: 400px;
         }
 
-        #slider-container img {
+        #slider img {
             width: 600px;
             height: 400px;
             object-fit: cover;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .fullscreen-img {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 80vw;
+            height: 80vh;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+            pointer-events: none;
+        }
+
+        .fullscreen-img.visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: all;
         }
 
         nav {
@@ -159,21 +181,19 @@
 
     <div class="relative justify-center flex items-center bg-gradient-to-r from-blue-500 to-purple-500">
         <button id="prev" class="bg-white p-2 rounded-full shadow-md absolute left-0 ml-4 z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
         </button>
         <div id="slider-container" class="relative overflow-hidden mx-12 border-4 border-black rounded-lg">
             <div class="w-full h-full flex transition-transform duration-500 ease-in-out" id="slider">
-                <img src="Empty.png" class="rounded-lg">
-                <img src="Empty1.png" class="rounded-lg">
-                <img src="Empty2.png" class="rounded-lg">
+                <img src="Empty.png" class="rounded-lg image-item">
+                <img src="Empty1.png" class="rounded-lg image-item">
+                <img src="Empty2.png" class="rounded-lg image-item">
             </div>
         </div>
         <button id="next" class="bg-white p-2 rounded-full shadow-md absolute right-0 mr-4 z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
         </button>
@@ -182,9 +202,7 @@
     <!-- Footer -->
     <div class="bg-gray-800 text-white text-center p-4 mt-8">
         <h2 class="text-2xl font-bold">Credits</h2>
-        <p class="text-lg">Website designed and developed by <a href="https://moenyofficial.github.io/Public/"
-                target="_blank" class="text-blue-500 hover:text-blue-700">MoenyOfficial</a></p>
-
+        <p class="text-lg">Website designed and developed by <a href="https://moenyofficial.github.io/Public/" target="_blank" class="text-blue-500 hover:text-blue-700">MoenyOfficial</a></p>
 
         <footer class="bg-gray-800 text-white text-center p-4 mt-8">
             &copy; 2024 - Sacred Studios.
@@ -192,12 +210,12 @@
     </div>
 
     <script>
-        // JavaScript remains unchanged
         const slider = document.getElementById('slider');
         const prevButton = document.getElementById('prev');
         const nextButton = document.getElementById('next');
         let currentIndex = 0;
         let autoSlideInterval;
+        let manualSlideTimeout;
         const autoSlideDuration = 3000; // Auto slide every 3 seconds
         const manualSlidePause = 10000; // Pause auto slide for 10 seconds after manual navigation
 
@@ -216,7 +234,8 @@
 
         function resetAutoSlide() {
             clearInterval(autoSlideInterval);
-            setTimeout(startAutoSlide, manualSlidePause);
+            clearTimeout(manualSlideTimeout);
+            manualSlideTimeout = setTimeout(startAutoSlide, manualSlidePause);
         }
 
         prevButton.addEventListener('click', () => {
@@ -233,6 +252,29 @@
 
         // Start the auto-slide on page load
         startAutoSlide();
+
+        // Pause auto-slide on hover and resume after hover
+        const images = slider.querySelectorAll('img');
+        images.forEach(image => {
+            image.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+            image.addEventListener('mouseleave', startAutoSlide);
+        });
+
+        // Show larger image on click
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                const fullscreenImg = document.createElement('img');
+                fullscreenImg.src = image.src;
+                fullscreenImg.classList.add('fullscreen-img');
+                document.body.appendChild(fullscreenImg);
+                setTimeout(() => fullscreenImg.classList.add('visible'), 10); // Add visible class after appending to trigger transition
+
+                fullscreenImg.addEventListener('click', () => {
+                    fullscreenImg.classList.remove('visible');
+                    setTimeout(() => document.body.removeChild(fullscreenImg), 500); // Remove from DOM after transition
+                });
+            });
+        });
     </script>
 </body>
 
