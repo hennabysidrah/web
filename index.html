@@ -241,26 +241,26 @@
         let manualSlideTimeout;
         const autoSlideDuration = 3000;
         const manualSlidePause = 10000;
-
+    
         function updateSlider() {
             slider.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
-
+    
         function autoSlide() {
             currentIndex = (currentIndex < slider.children.length - 1) ? currentIndex + 1 : 0;
             updateSlider();
         }
-
+    
         function startAutoSlide() {
             autoSlideInterval = setInterval(autoSlide, autoSlideDuration);
         }
-
+    
         function resetAutoSlide() {
             clearInterval(autoSlideInterval);
             clearTimeout(manualSlideTimeout);
-            manualSlideTimeout = setTimeout(startAutoSlide, manualSlidePause);
+            startAutoSlide();
         }
-
+    
         thumbnails.forEach((thumbnail, index) => {
             thumbnail.addEventListener('click', () => {
                 currentIndex = index;
@@ -268,25 +268,27 @@
                 resetAutoSlide();
             });
         });
-
+    
         startAutoSlide();
-
+    
         const images = slider.querySelectorAll('img');
         images.forEach(image => {
             image.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
             image.addEventListener('mouseleave', startAutoSlide);
-
+    
             image.addEventListener('click', () => {
                 const fullscreenImg = document.createElement('img');
                 fullscreenImg.src = image.src;
                 fullscreenImg.classList.add('fullscreen-img');
                 document.body.appendChild(fullscreenImg);
                 setTimeout(() => fullscreenImg.classList.add('visible'), 10);
-
+    
                 fullscreenImg.addEventListener('click', () => {
                     fullscreenImg.classList.remove('visible');
                     setTimeout(() => document.body.removeChild(fullscreenImg), 500);
                 });
+    
+                resetAutoSlide(); // Reset the auto slide cooldown when an image is clicked
             });
         });
     </script>
