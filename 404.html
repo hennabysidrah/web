@@ -1,74 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Error | Sacred Studios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            animation: gradient 5s ease-in-out infinite;
-            background: linear-gradient(270deg, #ff00f2, #7700ff, #1100ff, #00ff4c, #ffee00, #ff9100,  #ff0000);
-            background-size: 600% 600%;
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        /* Custom Animations */
+        .fade-in {
+            animation: fadeIn 1.5s ease-in-out;
         }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-
-        
-        .loader {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            border: 4px solid transparent;
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .cursor-blink {
+            animation: blink 1s step-start infinite;
         }
 
-        .loader:before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border: 4px solid transparent;
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 2s linear reverse infinite;
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
         }
 
-        a {
+        .glow-effect {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Error Page Styles */
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #2E466B;
+            color: white;
+            text-align: center;
+            overflow: hidden; /* Prevents scrolling */
+        }
+
+        .code-snippet {
+            background-color: #1B2A44;
+            padding: 1rem; /* Reduced padding */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            max-width: 600px; /* Reduced width */
+            width: 90%;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .code-snippet .line-number {
+            color: #888;
             display: inline-block;
-            padding: 12px 24px;
-            background-color: #ffffff;
-            color: #000000;
-            border-radius: 25px;
+            width: 1.5rem; /* Reduced width */
+            user-select: none;
+        }
+
+        .code-snippet .code {
+            display: inline-block;
+            width: calc(100% - 1.5rem);
+            white-space: nowrap;
+            overflow-x: auto;
+            font-size: 0.875rem; /* Reduced font size */
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 1ch;
+            background-color: white;
+        }
+
+        .cta-button {
+            background-color: #4E6C92;
+            color: white;
+            padding: 0.5rem 1rem; /* Reduced padding */
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 1.5rem; /* Reduced margin */
             text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 0.875rem; /* Reduced font size */
         }
 
-        a:hover {
-            background-color: #ff0000;
+        .cta-button:hover {
+            background-color: #6482AD;
             transform: scale(1.05);
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body class="flex items-center justify-center h-screen text-white">
-    <div class="flex flex-col items-center">
-        <div class="loader" id="loader"></div>
-        <div class="content text-center space-y-4">
-            <h1 class="text-9xl">404</h1>
-            <p class="text-4xl">Page not found</p>
-            <a href="index.html" class="text-2xl underline text-black-300 hover:text-white transition duration-200">Go back home</a>
+
+<body class="bg-2E466B text-white font-sans">
+    <section class="error-page fade-in">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-7xl font-bold glow-effect mb-2">404</h1> <!-- Reduced font size and margin -->
+            <p class="text-lg md:text-xl mb-4">Oh no! You’ve ventured into unknown code...</p> <!-- Reduced font size and margin -->
+            <div class="code-snippet">
+                <div>
+                    <span class="line-number">1</span><span class="code">function findPage(page) {</span>
+                </div>
+                <div>
+                    <span class="line-number">2</span><span class="code"> &nbsp;&nbsp;if (page === "exists") {</span>
+                </div>
+                <div>
+                    <span class="line-number">3</span><span class="code"> &nbsp;&nbsp;&nbsp;&nbsp;return "Page found!";</span>
+                </div>
+                <div>
+                    <span class="line-number">4</span><span class="code"> &nbsp;&nbsp;} else {</span>
+                </div>
+                <div>
+                    <span class="line-number">5</span><span class="code"> &nbsp;&nbsp;&nbsp;&nbsp;return "Error 404: Page not found";</span>
+                </div>
+                <div>
+                    <span class="line-number">6</span><span class="code"> &nbsp;&nbsp;}</span>
+                </div>
+                <div>
+                    <span class="line-number">7</span><span class="code">}</span>
+                </div>
+                <div>
+                    <span class="line-number">8</span><span class="code">let message = findPage("lost");</span>
+                </div>
+                <div>
+                    <span class="line-number">9</span><span class="code">console.log(message);</span>
+                    <span class="cursor cursor-blink"></span>
+                </div>
+            </div>
+            <p class="text-base mt-4">But don’t worry, our skilled team is here to help you debug and get back on track.</p> <!-- Reduced font size and margin -->
+            <a href="index.html" class="cta-button">Return to Homepage</a>
         </div>
-    </div>
+    </section>
 </body>
+
 </html>
