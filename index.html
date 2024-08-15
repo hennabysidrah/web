@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacred Studios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        /* Custom Animations */
+        .fade-in {
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hover-zoom:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .scale-up {
+            transition: transform 0.3s ease;
+        }
+
+        .scale-up:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sticky header styles */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: #4e6c92;
+            color: white;
+            transition: padding 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, font-size 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sticky-header.scrolled {
+            padding: 0.5rem 1rem;
+            background-color: #3b4b63;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Site title transitions */
+        .site-title {
+            transition: font-size 0.3s ease;
+        }
+
+        .sticky-header.scrolled .site-title {
+            font-size: 1.75rem;
+        }
+
+        /* Navbar styles */
+        .nav-link {
+            font-size: 1rem;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #e0e0e0;
+        }
+
+        /* Responsive video container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 0.5rem;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Portfolio image styles */
+        .portfolio-item img {
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portfolio-item img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Updated styles for testimonials section */
+        .testimonial-text {
+            color: black;
+        }
+
+        .testimonial-name {
+            color: black;
+        }
+
+        /* Dark Mode Styles */
+        .dark-mode {
+            background-color: #1a202c;
+            /* Dark background color */
+            color: #e2e8f0;
+            /* Light text color */
+        }
+
+        .dark-mode .sticky-header {
+            background-color: #2d3748;
+        }
+
+        .dark-mode .hero-overlay {
+            background-color: rgba(26, 32, 44, 0.75);
+            /* Darker overlay */
+        }
+
+        .dark-mode .bg-gray-100 {
+            background-color: #2d3748;
+            /* Dark gray background */
+        }
+
+        .dark-mode .bg-white {
+            background-color: #1a202c;
+            /* Dark background for white elements */
+        }
+
+        .dark-mode .text-black {
+            color: #e2e8f0;
+            /* Light text color */
+        }
+
+        .dark-mode .text-white {
+            color: #1a202c;
+            /* Dark text color */
+        }
+
+        .dark-mode .bg-blue-500 {
+            background-color: #2b6cb0;
+            /* Adjust button color for dark mode */
+        }
+
+        .dark-mode .bg-blue-700 {
+            background-color: #2c5282;
+            /* Adjust button hover color for dark mode */
+        }
+
+        .dark-mode .portfolio-item img {
+            border: 1px solid #2d3748;
+            /* Dark border for images */
+        }
+
+
+        .hero h2,
+        p {
+            color: white;
+        }
+
+        /* Testimonials Section Styles */
+        .testimonial-text,
+        .testimonial-name {
+            color: black;
+        }
+
+        .dark-mode .testimonial-text,
+        .dark-mode .testimonial-name {
+            color: white;
+        }
+
+        /* General Glow Effect */
+        .contact-icon {
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        /* Glow Effect in Dark Mode */
+        .dark-mode .contact-icon {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Optional: Specific Colors for Each Icon */
+        .dark-mode .contact-icon[src*="Discord.png"] {
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.6);
+            /* Discord's blue */
+        }
+
+        .dark-mode .contact-icon[src*="Roblox.svg"] {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            /* Roblox's red */
+        }
+
+        .dark-mode .contact-icon[src*="X.png"] {
+            box-shadow: 0 0 15px rgba(29, 161, 242, 0.6);
+            /* X's blue */
+        }
+    </style>
+</head>
+
+<body class="bg-F5EDED text-black font-sans">
+    <!-- Navbar -->
+    <header id="navbar"
+        class="sticky-header w-full bg-4e6c92 text-white-1 shadow-lg py-8 px-8 flex justify-between items-center transition-all duration-300">
+        <h1 class="site-title text-3xl md:text-4xl font-bold transition-all duration-300 text-white-1">Sacred Studios
+        </h1>
+        <nav>
+            <ul class="flex space-x-8">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="#testimonials" class="nav-link">Comments</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero h-screen bg-cover bg-center relative"
+        style="background-image: url('images/Background/Background.webp');">
+        <div class="hero-overlay absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative h-full flex flex-col items-center justify-center text-center text-white px-8 hero-content">
+            <div class="max-w-2xl fade-in">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg">Welcome to Sacred Studios</h2>
+                <p class="text-xl mb-8 drop-shadow-md">Crafting Timeless Experiences</p>
+                <a href="#portfolio"
+                    class="bg-blue-500 text-white hover:bg-blue-700 py-3 px-6 rounded-full transition duration-500 transform hover:scale-105 shadow-lg z-20">
+                    View Our Work
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 px-4 bg-gray-100 text-black">
+        <div class="max-w-5xl mx-auto text-center slide-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">About Us</h2>
+            <p class="text-lg mb-6 text-black">Hi, I'm Zeyan and I'm 14 years old. I specialize in Roblox scripting
+                services,
+                including Luau programming. Although I'm still learning and growing my skills, I’m dedicated to
+                providing decent-quality code and solutions for your Roblox projects.</p>
+            <div class="mt-8 flex justify-center">
+                <img src="images/Nebula/Nebula.png" alt="Our Team" class="bg-black rounded-lg shadow-lg scale-up">
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="py-16 px-4 bg-white text-black">
+        <div class="max-w-5xl mx-auto text-center slide-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-black">Introducing Nebula Infinity | Second Edition</h2>
+            <p class="text-lg mb-8 text-black">Experience the next level of innovation with our latest product. Watch
+                the teaser to
+                see what makes the Nebula Infinity | Second Edition stand out.</p>
+            <div class="video-container mx-auto mb-8">
+                <iframe src="https://www.youtube.com/embed/DBu9ErbddWw" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p class="text-lg text-black">Discover the features and design of the Nebula Infinity | Second Edition in
+                our exclusive
+                teaser video. Get ready for a product that’s set to revolutionize your experience.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 px-4 bg-gray-100 from-6482AD to-2E466B text-black">
+        <div class="max-w-5xl mx-auto text-center fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12">Our Service</h2>
+            <div
+                class="p-8 bg-white bg-opacity-10 rounded-lg transform hover:scale-110 transition duration-500 text-black">
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-black" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.75 17L15 12l-5.25-5" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Roblox Scripting</h3>
+                <p class="text-lg text-black">We offer expert Roblox scripting services, specializing in Luau. Whether
+                    you're looking to create custom game mechanics, enhance your existing projects, or develop new
+                    features, our focus is on delivering precise and effective solutions tailored to your needs. Let us
+                    help you bring your Roblox game ideas to life with clean, efficient, and optimized code.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-16 px-4 bg-white text-black">
+        <div class="max-w-5xl mx-auto text-center slide-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12">Our Portfolio</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 portfolio-item">
+                <!-- Portfolio Item 1 -->
+                <div class="relative">
+                    <img src="images/Portfolio/Portfolio1.png" alt="Project 1" class="w-full h-auto">
+                    <div
+                        class="absolute inset-0 bg-black opacity-0 hover:opacity-75 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-white text-lg font-bold">Project 1</span>
+                    </div>
+                </div>
+                <!-- Portfolio Item 2 -->
+                <div class="relative">
+                    <img src="images/Portfolio/Portfolio3.png" alt="Project 2" class="w-full h-auto">
+                    <div
+                        class="absolute inset-0 bg-black opacity-0 hover:opacity-75 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-white text-lg font-bold">Project 2</span>
+                    </div>
+                </div>
+                <!-- Portfolio Item 3 -->
+                <div class="relative">
+                    <img src="images/Portfolio/Portfolio4.png" alt="Project 3" class="w-full h-auto">
+                    <div
+                        class="absolute inset-0 bg-black opacity-0 hover:opacity-75 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-white text-lg font-bold">Project 3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 px-4 bg-gray-100 text-black">
+        <div class="max-w-5xl mx-auto text-center fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12">From Clients</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="p-8 bg-white rounded-lg shadow-md">
+                    <p class="testimonial-text mb-4">"Super work! The quality of your effort is clear to see."</p>
+                    <h3 class="testimonial-name font-bold text-lg">Mystery_Zak</h3>
+                    <p class="text-sm">Roblox, In-game chat</p>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="p-8 bg-white rounded-lg shadow-md">
+                    <p class="testimonial-text mb-4">"It’s working exactly as needed. I really appreciate your
+                        assistance!"</p>
+                    <h3 class="testimonial-name font-bold text-lg">jackzgamedev</h3>
+                    <p class="text-sm">Discord, Direct Message</p>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="p-8 bg-white rounded-lg shadow-md">
+                    <p class="testimonial-text mb-4">"I look forward to the opportunity to collaborate again in the near
+                        future."</p>
+                    <h3 class="testimonial-name font-bold text-lg">Moeny_Official</h3>
+                    <p class="text-sm">Discord, Direct Message </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-4 bg-gradient-to-r from-6482AD to-3B4B63 text-black">
+        <div class="max-w-5xl mx-auto text-center slide-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12">Connect With Us</h2>
+            <p class="text-lg mb-8 text-black">We're always ready to collaborate! Reach out to us on any of these
+                platforms:</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                <!-- Discord Contact -->
+                <div
+                    class="p-8 bg-white bg-opacity-20 rounded-lg transform hover:scale-105 transition duration-500 text-black">
+                    <div class="mb-4">
+                        <img src="images/Icons/Discord.png" alt="Discord Icon" class="h-12 w-12 mx-auto contact-icon">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Discord</h3>
+                    <p class="mb-6 text-black">Join our Discord community to chat with us directly, get support, and
+                        stay updated on the latest news.</p>
+                    <a href="https://discord.gg/eNHRKZcwUa" target="_blank"
+                        class="bg-4E6C92 text-black py-3 px-8 rounded-full shadow-md hover:bg-2E466B transition duration-300 transform hover:scale-105">
+                        Join Discord
+                    </a>
+                </div>
+
+                <!-- Roblox Contact -->
+                <div
+                    class="p-8 bg-white bg-opacity-20 rounded-lg transform hover:scale-105 transition duration-500 text-black">
+                    <div class="mb-4">
+                        <img src="images/Icons/Roblox.svg" alt="Roblox Icon" class="h-12 w-12 mx-auto contact-icon">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Roblox</h3>
+                    <p class="mb-6 text-black">Explore our Roblox profile to see our latest creations and projects.
+                        Connect with us for collaborations or commissions.</p>
+                    <a href="https://twitter.com/zeyan99645177" target="_blank"
+                        class="bg-4E6C92 text-black py-3 px-8 rounded-full shadow-md hover:bg-2E466B transition duration-300 transform hover:scale-105">
+                        Visit Roblox
+                    </a>
+                </div>
+
+                <!-- X Contact -->
+                <div
+                    class="p-8 bg-white bg-opacity-20 rounded-lg transform hover:scale-105 transition duration-500 text-black">
+                    <div class="mb-4">
+                        <img src="images/Icons/X.png" alt="X Icon" class="h-12 w-12 mx-auto contact-icon">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">X (formerly Twitter)</h3>
+                    <p class="mb-6 text-black">Follow us on X for updates, news, and more. Engage with us directly
+                        through tweets and messages.</p>
+                    <a href="https://twitter.com/zeyan99645177" target="_blank"
+                        class="bg-4E6C92 text-black py-3 px-8 rounded-full shadow-md hover:bg-2E466B transition duration-300 transform hover:scale-105">
+                        Follow Us on X
+                    </a>
+                </div>
+    </section>
+
+    <!-- Dark Mode Toggle Button -->
+    <button id="darkModeToggle"
+        class="fixed bottom-4 left-4 p-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 hover:shadow-xl active:scale-95 focus:outline-none">
+        <!-- Sun Icon for Light Mode -->
+        <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 5V3m0 18v-2M7.05 7.05L5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636L16.95 7.05M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+        </svg>
+
+        <!-- Moon Icon for Dark Mode -->
+        <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 21a9 9 0 0 1-.5-17.986V3c-.354.966-.5 1.911-.5 3a9 9 0 0 0 9 9c.239 0 .254.018.488 0A9.004 9.004 0 0 1 12 21Z" />
+        </svg>
+    </button>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-100 from-4E6C92 to-3B4B63 text-black dark:bg-gray-800">
+        <div class="max-w-5xl mx-auto text-center">
+            <p class="mb-4 text-lg text-black font-semibold">
+                &copy; <span id="currentYear"></span> Sacred Studios. All rights reserved.
+            </p>
+            <p class="text-black">
+                Website crafted with dedication by
+                <a href="https://moenyofficial.github.io/public/" target="_blank"
+                    class="underline hover:text-gray-500 transition-colors duration-300">MoenyOfficial</a>.
+            </p>
+            <p class="mt-4 text-xs text-black">
+                Last updated on <span id="lastModified"></span>.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Dynamically update the year in the footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Dynamically update the last modified date of the webpage
+        document.getElementById('lastModified').textContent = document.lastModified;
+    </script>
+
+    <script>
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const body = document.body;
+            const icon = document.getElementById('darkModeIcon');
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                icon.setAttribute('d', 'M12 3v1m0 16v1m7-7h-1M4 12H3m13.36-6.36l-.71.71M5.64 17.36l-.71-.71m12.02-.71l-.71.71M5.64 5.64l-.71-.71m14.14 6.36a9 9 0 11-9-9 9 9 0 019 9z');
+            } else {
+                icon.setAttribute('d', 'M12 3v1m0 16v1m7-7h-1M4 12H3m13.36-6.36l-.71.71M5.64 17.36l-.71-.71m12.02-.71l-.71.71M5.64 5.64l-.71-.71m14.14 6.36a9 9 0 11-9-9 9 9 0 019 9z');
+            }
+        }
+
+        // Attach the toggle function to the button
+        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+
+        // Check if dark mode was previously enabled
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Save the dark mode state in localStorage
+        document.body.addEventListener('classListChanged', () => {
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Debounce function to limit the rate at which a function can fire
+        function debounce(func, wait = 20, immediate = true) {
+            let timeout;
+            return function () {
+                const context = this, args = arguments;
+                const later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                const callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        }
+
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Attach the debounced scroll handler
+        window.addEventListener('scroll', debounce(handleScroll));
+    </script>
+</body>
+
+</html>
